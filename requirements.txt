@@ -5,4 +5,8 @@ faiss-cpu
 sentence-transformers
 python-dotenv
 langchain-community
+<<<<<<< HEAD
 langchain-groq 
+=======
+langchain-groq 
+gunicorn

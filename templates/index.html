@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Nitish M's AI Assistant</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #0e0e10;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      color: #eee;
+    }
+
+    .chat-container {
+      width: 90%;
+      max-width: 850px;
+      background-color: #1c1c1e;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+      border-radius: 15px;
+      display: flex;
+      flex-direction: column;
+      height: 92vh;
+      overflow: hidden;
+    }
+
+    .chat-header {
+      background: linear-gradient(135deg, #6e40c9, #8860ff);
+      color: #fff;
+      padding: 20px;
+      font-size: 24px;
+      text-align: center;
+      font-weight: bold;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    }
+
+    .chat-window {
+      flex-grow: 1;
+      padding: 20px;
+      overflow-y: auto;
+      border-top: 1px solid #333;
+      border-bottom: 1px solid #333;
+      scrollbar-width: thin;
+      scrollbar-color: #555 #1c1c1e;
+    }
+
+    .message {
+      margin-bottom: 15px;
+      display: flex;
+      animation: fadeIn 0.3s ease-in;
+    }
+
+    .message.user {
+      justify-content: flex-end;
+    }
+
+    .message.bot {
+      justify-content: flex-start;
+    }
+
+    .message-content {
+      max-width: 70%;
+      padding: 12px 18px;
+      border-radius: 18px;
+      line-height: 1.5;
+      font-size: 15px;
+      word-wrap: break-word;
+    }
+
+    .message.user .message-content {
+      background-color: #4a4e69;
+      color: #fff;
+      border-bottom-right-radius: 4px;
+    }
+
+    .message.bot .message-content {
+      background-color: #2c2c2e;
+      color: #ddd;
+      border-bottom-left-radius: 4px;
+    }
+
+    .chat-input {
+      display: flex;
+      padding: 15px 20px;
+      background-color: #1a1a1c;
+      border-top: 1px solid #333;
+    }
+
+    .chat-input input {
+      flex-grow: 1;
+      border: none;
+      padding: 12px 16px;
+      border-radius: 25px;
+      font-size: 14px;
+      background-color: #2c2c2e;
+      color: #eee;
+      outline: none;
+      transition: background 0.2s;
+    }
+
+    .chat-input input:focus {
+      background-color: #3a3a3c;
+    }
+
+    .chat-input button {
+      background-color: #6e40c9;
+      color: #fff;
+      border: none;
+      padding: 12px 20px;
+      margin-left: 10px;
+      border-radius: 25px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.3s ease;
+    }
+
+    .chat-input button:hover {
+      background-color: #7e52f5;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(5px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="chat-container">
+    <div class="chat-header">
+        Nitish M's AI Assistant
+    </div>
+    <div class="chat-window" id="chat-window">
+      <!-- Messages will be appended here -->
+    </div>
+    <div class="chat-input">
+      <input type="text" id="user-input" placeholder="Ask a question about the resume..." />
+      <button onclick="sendMessage()">Send</button>
+    </div>
+  </div>
+
+  <script>
+    async function sendMessage() {
+      const userInput = document.getElementById('user-input');
+      const message = userInput.value;
+      if (message.trim() === '') return;
+
+      appendMessage('user', message);
+      userInput.value = '';
+
+      try {
+        const response = await fetch('/get_response', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ 'query': message })
+        });
+
+        const data = await response.json();
+        appendMessage('bot', data.response);
+      } catch (error) {
+        appendMessage('bot', '❌ Error fetching response. Please try again.');
+      }
+    }
+
+    function appendMessage(sender, message) {
+      const chatWindow = document.getElementById('chat-window');
+      const messageElement = document.createElement('div');
+      messageElement.classList.add('message', sender);
+
+      const messageContent = document.createElement('div');
+      messageContent.classList.add('message-content');
+      messageContent.innerText = message;
+
+      messageElement.appendChild(messageContent);
+      chatWindow.appendChild(messageElement);
+      chatWindow.scrollTop = chatWindow.scrollHeight;
+    }
+
+    // Handle 'Enter' key press in the input field
+    document.getElementById('user-input').addEventListener('keypress', function (event) {
+      if (event.key === 'Enter') {
+        sendMessage();
+      }
+    });
+  </script>
+</body>
+</html>
