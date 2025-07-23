@@ -1,0 +1,19 @@
+Name: Nitish M
+Father's Name: Malaichamy C
+Mother's Name: Rukkumani M
+Sister's Name: Nivethaa M
+Date of Birth: 21-Feb-2006
+Gender: Male
+Native Place: Periyakulam,Theni,Tamil Nadu
+Current City: Anupuram
+Family Members: Father, Mother, Elder Sister
+Phone: +91 8610478847
+Email: nitishm.2102@gmail.com
+LinkedIn: <your-link>
+GitHub: <your-link>
+Education:
+  - B.Tech Computer Science, Shiv Nadar University, Chennai (2023-2027)
+  - Class XII, AECS Anupuram (2022-2023)
+  - Class X, AECS Kalpakkam (2020-2021)
+Hobbies: Reading, Coding, Cricket
+Achievements: NPTEL Elite+Silver, LeetCode 200+ problems, EmpowerTech Hackathon Finalist

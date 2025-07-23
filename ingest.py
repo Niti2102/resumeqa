@@ -1,14 +1,12 @@
 import os
-from langchain.vectorstores import FAISS
-from langchain.embeddings import HuggingFaceEmbeddings
+from langchain_community.embeddings import HuggingFaceEmbeddings
+from langchain_community.vectorstores import FAISS
 from utils import load_documents, split_documents
 from config import vector_store_path
 
-# Path to your resume PDF file
-resume_path = os.path.join(os.path.dirname(__file__), "resume.pdf")
-
-# Load and split the documents
-documents = load_documents(resume_path)
+# Load and split the personal info text file
+file_path = "personal_info.txt"
+documents = load_documents(file_path)
 chunks = split_documents(documents)
 
 # Initialize embedding model
@@ -19,5 +17,4 @@ db = FAISS.from_documents(chunks, embedding_model)
 
 # Save vector store
 db.save_local(vector_store_path)
-
-print("✅ Resume embedded and FAISS vector store saved!")
+print("✅ Personal info embedded and FAISS vector store saved!")
