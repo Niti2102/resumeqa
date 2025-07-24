@@ -1,10 +1,8 @@
 flask
 langchain
-pypdf
+openai
+langchain-community
+langchain-groq
 faiss-cpu
 sentence-transformers
 python-dotenv
-langchain-community
-
-langchain-groq 
-gunicorn

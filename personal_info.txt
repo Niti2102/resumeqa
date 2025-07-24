@@ -1,4 +1,5 @@
 Name: Nitish M
+CGPA:8.85
 Father's Name: Malaichamy C
 Mother's Name: Rukkumani M
 Sister's Name: Nivethaa M
