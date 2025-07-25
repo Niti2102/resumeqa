@@ -1,15 +1,16 @@
+import os
 from flask import Flask, render_template, request, jsonify
 from langchain.prompts import PromptTemplate
 from langchain_groq import ChatGroq
 from langchain_community.vectorstores import FAISS
-from langchain_community.embeddings import HuggingFaceEmbeddings
+from langchain_huggingface import HuggingFaceEmbeddings  # Updated import
 from langchain.chains import ConversationalRetrievalChain
 from config import vector_store_path
 
 app = Flask(__name__)
 
-# Load the vector store
-embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
+# Load the vector store with smaller model
+embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/paraphrase-MiniLM-L3-v2")
 db = FAISS.load_local(vector_store_path, embeddings, allow_dangerous_deserialization=True)
 
 # Set up the conversational retrieval chain
@@ -18,7 +19,8 @@ retriever = db.as_retriever(search_kwargs={"k": 2})
 
 # Define the prompt template
 prompt_template = """
-Use the following pieces of context to answer the question at the end. If you don't know the answer, just say that you don't know, don't try to make up an answer.
+Use the following pieces of context to answer the question at the end. 
+If you don't know the answer, just say that you don't know, don't try to make up an answer.
 
 {context}
 
@@ -47,4 +49,5 @@ def get_response():
     return jsonify({"response": result["answer"]})
 
 if __name__ == "__main__":
-    app.run(debug=True) 
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port)
