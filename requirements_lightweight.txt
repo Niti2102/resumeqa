@@ -1,0 +1,11 @@
+flask==2.3.3
+langchain==0.0.350
+openai==1.3.7
+langchain-community==0.0.10
+langchain-groq==0.0.1
+faiss-cpu==1.7.4
+python-dotenv==1.0.0
+gunicorn==21.2.0
+# Using scikit-learn for lighter embeddings instead of sentence-transformers
+scikit-learn==1.3.0
+numpy==1.24.3

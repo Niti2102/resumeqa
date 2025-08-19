@@ -17,4 +17,4 @@ Education:
   - Class XII, AECS Anupuram (2022-2023)
   - Class X, AECS Kalpakkam (2020-2021)
 Hobbies: Reading, Coding, Cricket
-Achievements: NPTEL Elite+Silver, LeetCode 200+ problems, EmpowerTech Hackathon Finalist
+Achievements: NPTEL Elite+Silver in Affective Computing , EmpowerTech Hackathon Finalist
